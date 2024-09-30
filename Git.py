@@ -4,7 +4,7 @@ import yfinance as yf
 import streamlit as st
 
 # Descargar datos históricos de Bitcoin
-BTC = yf.download('BTC-USD', start='2024-09-25')
+BTC = yf.download('BTC-USD', interval='1m', period='1d')
 
 
 BTC.to_csv('output.csv')
