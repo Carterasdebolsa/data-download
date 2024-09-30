@@ -1,0 +1,33 @@
+name: Update Data
+
+on:
+  schedule:
+    - cron: '0 1 * * *'  # Ejecutar todos los días a la 01:00 UTC (02:00 UTC+1)
+
+jobs:
+  update_data:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Run script
+        run: |
+          python Git.py
+      
+      - name: Commit changes
+        run: |
+          git config --local user.email "carterasdebolsa@gmail.com"
+          git config --local user.name "Carterasdebolsa"
+          git add output.csv
+          git commit -m "Actualizar datos diarios"
+          git push origin master
